@@ -1,5 +1,5 @@
 # restaurant-sales-dashboard
-  Cleaning of a large dataset and building an interactive dashboard
+  Cleaning of a large dataset and building an interactive dashboard with VBA.
 
 # Overview 
 This page will detail the process of cleaning a dataset and building a dashboard along with some VBA here and there as a part of the amazing [Kyle Pew](https://www.linkedin.com/in/kylepew/)'s [Microsoft Excel Data Analysis and Dashboard Reporting](https://www.udemy.com/course/microsoft-excel-data-analysis-and-dashboard-reporting/) course on Udemy.  
@@ -51,6 +51,38 @@ We use **Advanced Filter** to make Excel filter the Order History according to t
   - We go into the VBA window and transport the code from its module into the appropriate worksheet, and paste into the window, and it'll trigger every time the user changes something in the worksheet.
   - To change it to only triggering when the customer name is changed, we add an **IF** statement that checks where the target cell is B3 (which is where the customer name is located).
   - The Order History List is now fully automated!
+
+## Order Side Statistics
+For these we'll use the **SUBTOTAL()** because it can ignore hidden values, making it only count the visible records, perfect for using our filtered lists.
+
+## Chart
+- We make a pivot table and chart in a new sheet, it's a simple column chart that shows total order amount by year. We move it into the dashboard.
+- The chart, however, doesn't update when we select a customer, so that means we automate it with a bit of VBA:
+  - First things first, we create the procedure.
+  - We declare the variables: "PT" to store the order pivot table, "field" to store the filter field (customer name), "new_cus" as a string to store the customer name.
+  - We reference the PT variable as the pivot table itself. We use the "set" keyword because it's referring to an object
+  - Ditto with the field variable except it's referring to the filter field (customer name)
+  - Ditto with the new_cus variable, this time it's referring to the value of the cell B3, which is where the selected customer name resides.
+  - Next, we use a **with** structure, clear the field variable and set it equal to new_cus (which is the selected customer).
+  - We call the new procedure in the Customer Dashboard sheet object by its name, and there we have it!
+  - Customers without orders will break the pivot table, so we must add a contingency:
+    - We can have the code function as usual if there are no errors, and show a message box when there is an error.
+    - We'll set the chart to be hidden in case there are no orders, because there's nothing to calculate.
+
+
+## Slicers
+  - We add a slicer based on Order Month column.
+
+## Final Touches
+- We hide the extra worksheets and columns that aren't needed by the user.
+- We protect the workbook and make only the customer selection and slicers accessible.
+
+# Recap
+- We acquired a data set about orders placed by restaurants around the world.
+- We cleaned the data, ensuring cleanliness, consistency, and uniformity.
+- We built an interactive dashboard using different functions like **XLOOKUP()**, **INDEX()**, **MATCH()** etc.
+- We used VBA to automate the different filters for a seamless experience.
+- The result is a highly interactive, and versatile dashboard that is useable by everyone, to extract any insight they require.
 
 
 
